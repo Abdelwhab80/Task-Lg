@@ -1,0 +1,46 @@
+﻿@model ProductViewModel
+
+@{
+    ViewBag.Title = "Create Product";
+}
+
+<h2>Create Product</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="CategoryType">Category</label>
+        <select id="CategoryType" name="ProductBase.CategoryType" class="form-control" onchange="loadCategoryFields()">
+            <option value="">Select a Category</option>
+            @foreach (var category in Enum.GetValues(typeof(Task_Lg.Models.CategoryType)))
+            {
+                <option value="@((int)category)">@category</option> 
+            }
+        </select>
+
+    </div>
+
+    <div id="categoryFields"></div>
+
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@section Scripts {
+    <script>
+        function loadCategoryFields() {
+            var categoryType = document.getElementById('CategoryType').value;
+            var categoryFieldsDiv = document.getElementById('categoryFields');
+
+            if (categoryType !== "") {
+                fetch('/ProductBase/GetCategoryFields?categoryType=' + categoryType)
+                    .then(response => response.text())
+                    .then(html => {
+                        categoryFieldsDiv.innerHTML = html;
+                    });
+            } else {
+                categoryFieldsDiv.innerHTML = "";
+            }
+        }
+    </script>
+}

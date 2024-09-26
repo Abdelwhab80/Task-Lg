@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ProductBase>
+
+@{
+    ViewBag.Title = "Product List";
+}
+
+<h2>Product List</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.CategoryType.ToString()</td> 
+                
+                <td>
+                    @switch (product)
+                    {
+                        case LabtopProduct laptops:
+                            <p><strong>Model:</strong> @laptops.Model</p>
+                            <p><strong>Type:</strong> @laptops.Type</p>
+                            <p><strong>Ram:</strong> @laptops.Ram</p>
+                            <p><strong>Prossecor:</strong> @laptops.Prossecor</p>
+                            break;
+
+                        case PrinterProduct Priters:
+                            <p><strong>Model:</strong> @Priters.Model</p>
+                            <p><strong>Brand:</strong> @Priters.Brand</p>
+                            <p><strong>ip:</strong> @Priters.ip</p>
+
+                           
+                            break;
+
+                        case RouterProduct router:
+                            <p><strong>Model:</strong> @router.Model</p>
+                            <p><strong>Speed:</strong> @router.Speed</p>
+                            <p><strong>ip:</strong> @router.ip</p>
+                            <p><strong>NumberOfPorts:</strong> @router.NumberOfPorts</p>
+
+
+
+                            break;
+
+                        case ScreenProduct screen:
+                            <p><strong>Color:</strong> @screen.Color</p>
+                            <p><strong>Size:</strong> @screen.Size</p>
+                            <p><strong>Quality:</strong> @screen.Quality</p>
+
+                            break;
+
+                        default:
+                            <p>No specific details available for this category.</p>
+                            break;
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
